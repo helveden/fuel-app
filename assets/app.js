@@ -6,7 +6,17 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import './styles/app.css';
+import './styles/app.scss';
 
-// start the Stimulus application
-import './bootstrap';
+
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+
+import Default from './components/Default';
+
+// Default
+if(document.getElementById('default') !== null) {
+    var root = createRoot(document.getElementById('default'));
+    var elt = <Default />;
+    root.render(elt);
+}

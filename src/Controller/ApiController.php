@@ -36,14 +36,15 @@ class ApiController extends AbstractController
     }
     
     /**
-     * @Route("/search-pdv/", name="app_api_search_pdv")
+     * @Route("/search-pdv/{city}", name="app_api_search_pdv")
      */
-    public function searchPdv(PdvUseCase $pdvUseCase, $q = null): JsonResponse {
+    public function searchPdv(PdvUseCase $pdvUseCase, $city = null): JsonResponse {
         
         $params = [
-            'cp' => '77500'
+            // 'cp' => '77500',
+            'city' => $city
             // 'distance' => '12' > recherche avec un rayon
         ];
-        return $this->json($pdvUseCase->getBy($params));
+        return $this->json($pdvUseCase->searchBy($params));
     }
 }

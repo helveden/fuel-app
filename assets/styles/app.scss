@@ -1,0 +1,19 @@
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+
+/**
+* Reset
+**/
+
+ul {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 0;
+
+    li {
+        // padding-left: 0;
+    }
+}
+
+.wrap-top {
+    margin-top: 15px;
+}

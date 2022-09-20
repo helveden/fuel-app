@@ -15,6 +15,10 @@ class UseCase extends BaseUseCase {
     public function getBy($params) {
         return $this->factory->getBy($params);
     }
+    
+    public function searchBy($params) {
+        return $this->factory->getSearchBy($params);
+    }
 
     public function create() {
 

@@ -20,7 +20,11 @@ class PdvFactory extends AbstractFactory {
     }
 
     public function getBy($params = []) {
-        return $this->repo()->findByPostcode($params);
+        return $this->repo()->findBy($params);
+    }
+
+    public function getSearchBy($params = []) {
+        return $this->repo()->searchBy($params);
     }
 
     public function saveCommandAll(array $pdvs = [], $io) {
@@ -42,7 +46,8 @@ class PdvFactory extends AbstractFactory {
             'pdv_id' => $pdvDatas['@attributes']['id']
         ]);
         
-        if($pdv === null):
+        
+        if($pdv === null || empty($pdv)):
             $pdv = new Pdv();
             $pdv->setPdvId($pdvDatas['@attributes']['id']);
             $pdv->setLatitude($pdvDatas['@attributes']['latitude']);
@@ -88,7 +93,7 @@ class PdvFactory extends AbstractFactory {
             'prix'           => $prices,
             "automate-24-24" => $automate2424,
         ];
-
+        
         $pdv->setDatas($datas);
 
         $this->em()->persist($pdv);

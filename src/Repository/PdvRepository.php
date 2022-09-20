@@ -56,6 +56,19 @@ class PdvRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+public function searchBy($params): array
+{
+    $city = '%' . $params['city'] . '%';
+    
+    return $this->createQueryBuilder('p')
+        ->andWhere('p.city LIKE :city')
+        ->setParameter('city', $city)
+        ->orderBy('p.city', 'ASC')
+        ->getQuery()
+        ->getResult()
+    ;
+}
+
 public function findByPostcode($value): array
 {
     return $this->createQueryBuilder('p')
