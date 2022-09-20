@@ -24,6 +24,22 @@ abstract class AbstractFactory {
         return $this->em;
     }
 
+    public function getAll() {
+        return $this->repo()->findAll();
+    }
+
+    public function get($id) { 
+        return $this->repo()->find($id);
+    }
+
+    public function getBy($params = []) {
+        return $this->repo()->findBy($params);
+    }
+
+    public function getSearchBy($params = []) {
+        return $this->repo()->searchBy($params);
+    }
+
     public function getUser() {
         return $this->security->getUser();
     }

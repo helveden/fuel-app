@@ -11,22 +11,6 @@ class PdvFactory extends AbstractFactory {
         return $this->em()->getRepository(Pdv::class);
     }
 
-    public function getAll() {
-        return $this->repo()->findAll();
-    }
-
-    public function get($id) { 
-        return $this->repo()->find($id);
-    }
-
-    public function getBy($params = []) {
-        return $this->repo()->findBy($params);
-    }
-
-    public function getSearchBy($params = []) {
-        return $this->repo()->searchBy($params);
-    }
-
     public function saveCommandAll(array $pdvs = [], $io) {
         $io->progressStart();
 

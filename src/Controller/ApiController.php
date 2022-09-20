@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Cleaner\Pdv\UseCase as PdvUseCase;
@@ -17,14 +18,14 @@ class ApiController extends AbstractController
      * @Route("/", name="app_api_default")
      */
     public function index(): JsonResponse {
-        return $this->json([]);
+        return $this->json([], Response::HTTP_NOT_FOUND);
     }
 
     /**
      * @Route("/pdv", name="app_api_pdv")
      */
     public function indexPdv(PdvUseCase $pdvUseCase): JsonResponse {
-        return $this->json($pdvUseCase->getAll());
+        return $this->json($pdvUseCase->getAll(), Response::HTTP_CREATED);
     }
     
     /**
@@ -32,7 +33,7 @@ class ApiController extends AbstractController
      */
     public function showPdv(PdvUseCase $pdvUseCase, $id): JsonResponse {
         
-        return $this->json($pdvUseCase->get($id));
+        return $this->json($pdvUseCase->get($id), Response::HTTP_CREATED);
     }
     
     /**
@@ -45,6 +46,6 @@ class ApiController extends AbstractController
             'city' => $city
             // 'distance' => '12' > recherche avec un rayon
         ];
-        return $this->json($pdvUseCase->searchBy($params));
+        return $this->json($pdvUseCase->searchBy($params), Response::HTTP_CREATED);
     }
 }
