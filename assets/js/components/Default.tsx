@@ -1,12 +1,16 @@
-import React, {Component} from 'react';
-
+import React, {Component, SyntheticEvent, ChangeEvent} from 'react';
 import axios from 'axios';
+
+import { DefaultInterface } from '../interfaces/DefaultInterface';
+import { PDV } from '../interfaces/pdv';
+import { PDV_PRICE } from '../interfaces/pdv_prices';
 
 
 class Default extends Component {
 
-    constructor(props) {
+    constructor(props: DefaultInterface) {
         super(props);
+
         this.state = {
             city: '',
             pdvs: [],
@@ -21,14 +25,9 @@ class Default extends Component {
     componentDidMount() {
         // rechercher s'il y a un id pour l'update
     }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-    
-    }
-
     
     
-    handleChangeCity(event) {   
+    handleChangeCity(event: ChangeEvent<HTMLInputElement>) {   
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
@@ -38,9 +37,11 @@ class Default extends Component {
         });
     }
 
-    async handleOpenPdv(city) {
+    async handleOpenPdv(city: {
+        context: string
+    }) {
         
-        var results = await axios.post('/api/pdvs', {context: city.context})
+        const results = await axios.post('/api/pdvs', {context: city.context})
         .then(function(response) {
             return response;
         });
@@ -48,13 +49,15 @@ class Default extends Component {
         this.setState({
             
         });
+
+        console.log(results)
     }
     
 
-    async submitSearchPdv(event) {
+    async submitSearchPdv(event: SyntheticEvent) {
         event.preventDefault();
 
-        var results = await axios.get('/api/search-pdv/' + this.state.city).then(function(response) {
+        const results = await axios.get('/api/search-pdv/' + this.state.city).then(function(response) {
             return response;
         });
         
@@ -97,16 +100,18 @@ class Default extends Component {
                     <section className="row">
                         <div className="col-md-12">
                             <table className='table'>
-                                <tbody>
-                                    {pdvs.map((pdv, ii) => {
+                                <tbody>,
+                                    {pdvs.map((pdv: PDV, ii: number) => {
                                         return <tr key={ii}>
                                             <td>{pdv.adresse}<br />{pdv.postalcode} {pdv.city} </td>
                                             <td></td> 
                                             <td></td>
                                             <td>
                                                 <ul>
-                                                    {pdv.datas.prix.map((price, jj) => {
-                                                        return <li className='d-flex justify-content-between'><strong>{price.nom}</strong><span>{price.valeur}</span></li>
+                                                    {pdv.datas.prix.map((price: PDV_PRICE, jj: number) => {
+                                                        return <li key={jj}
+                                                                className='d-flex justify-content-between'
+                                                            ><strong>{price.nom}</strong><span>{price.valeur}</span></li>
                                                     })}
                                                 </ul>
                                             </td>
